@@ -1,0 +1,28 @@
+<Page
+    x:Class="UPS.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UPS"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Image x:Name="image" HorizontalAlignment="Center" Margin="68,10,74,0" Grid.Row="0" VerticalAlignment="Top" Width="218" Source="Screenshot_1.png" Grid.RowSpan="4" Height="46"/>
+        <Button Name="Auto" Click="Auto_Click" HorizontalAlignment="Stretch" IsEnabled="False" Margin="0,228,0,0" VerticalAlignment="Top">Auto</Button>
+        <Button Name="Manual" Click="Manual_Click" HorizontalAlignment="Stretch" IsEnabled="False" Margin="0,265,0,0" VerticalAlignment="Top">Manual</Button>
+        <Button Name="Panel" Click="Panel_Click" HorizontalAlignment="Stretch" IsEnabled="False" Margin="0,327,0,0" VerticalAlignment="Top">Panel</Button>
+        <Button Name="Commercial" Click="Commercial_Click" HorizontalAlignment="Stretch" IsEnabled="False" Margin="0,365,0,0" VerticalAlignment="Top">Commercial</Button>
+        <Button Name="relayON" Click="relayON_Click" HorizontalAlignment="Stretch" IsEnabled="False" Margin="0,427,0,0" VerticalAlignment="Top">ON</Button>
+        <Button Name="relayOFF" Click="relayOFF_Click" HorizontalAlignment="Stretch" IsEnabled="False" Margin="0,464,0,0" VerticalAlignment="Top">OFF</Button>
+        
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="34,78,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="34,103,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="34,128,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="34,153,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="34,178,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="34,203,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="34,302,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="34,402,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+    </Grid>
+</Page>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
