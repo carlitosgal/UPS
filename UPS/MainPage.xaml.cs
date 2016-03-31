@@ -31,11 +31,7 @@ namespace UPS
         String Source ="Panel";
         String ChangeMode="Auto";
         Stopwatch cron = new Stopwatch();
-        Stopwatch second = new Stopwatch();
         TimeSpan diez = new TimeSpan (10,0,0);
-        TimeSpan stap = new TimeSpan(0, 0, 1);
-        UInt16 flag1 = 0;
-        UInt16 flag2 = 0;
         UInt16 vsys =14;
         UInt16 vcom = 14;
 
@@ -85,109 +81,88 @@ namespace UPS
             vcom *= 50;
             vcom /= 1023;
 
-            if (flag2 == 0)
+            if (textBlock6.Dispatcher.HasThreadAccess)
             {
-                refresh();
+                textBlock6.Text = "Change of source";
+            }
+            else {
+                textBlock6.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock6.Text = "Change of source"; });
+            }
+
+            if (textBlock7.Dispatcher.HasThreadAccess)
+            {
+                textBlock7.Text = "Energy source";
+            }
+            else {
+                textBlock7.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock7.Text = "Energy source"; });
+            }
+
+            if (textBlock8.Dispatcher.HasThreadAccess)
+            {
+                textBlock8.Text = "Relay (OFF)";
+            }
+            else {
+                textBlock8.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock8.Text = "Relay (OFF)"; });
+            }
+
+            if (textBlock2.Dispatcher.HasThreadAccess)
+            {
+                textBlock2.Text = "Change of source is: " + ChangeMode;
+            }
+            else {
+                textBlock2.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock2.Text = "Change of source is: " + ChangeMode; });
+            }
+
+            if (textBlock1.Dispatcher.HasThreadAccess)
+            {
+                textBlock1.Text = "Actual source: " + Source;
+            }
+            else {
+                textBlock1.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock1.Text = "Actual source: " + Source; });
+            }
+
+            if (textBlock5.Dispatcher.HasThreadAccess)
+            {
+                textBlock5.Text = "External charging time: " + Convert.ToString(cron.Elapsed);
+            }
+            else {
+                textBlock5.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock5.Text = "External charging time: " + Convert.ToString(cron.Elapsed); });
+            }
+
+            if (textBlock3.Dispatcher.HasThreadAccess)
+            {
+                textBlock3.Text = "Voltage in of the system: " + vsys;
+            }
+            else {
+                textBlock3.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock3.Text = "Voltage in of the system: " + vsys; });
+            }
+
+            if (textBlock4.Dispatcher.HasThreadAccess)
+            {
+                textBlock4.Text = "Voltage of the commercial current: " + vcom;
+            }
+            else {
+                textBlock4.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock4.Text = "Voltage of the commercial current: " + vcom; });
+            }
+
+
+
+            if (vsys <= 12 && ChangeMode.Equals("Auto"))
+            {
+                arduino.digitalWrite(13, PinState.HIGH);
+                Source = "Commercial current";
+                cron.Start();
+            }
+            if (Source.Equals("Commercial current") && cron.Elapsed >= diez)
+            {
+                arduino.digitalWrite(13, PinState.LOW);
+                Source = "Panel";
+                cron.Stop();
+                cron.Reset();
             }
         }
 
-        private void refresh()
-        {
-            flag2 = 1;
-            second.Start();
-            flag1 = 0;
-            while (flag1==0)
-            {
-                if (second.Elapsed>=stap)
-                {
-                    //loop here
-
-                    if (textBlock6.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock6.Text = "Change of source";
-                    }
-                    else {
-                        textBlock6.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock6.Text = "Change of source"; });
-                    }
-
-                    if (textBlock7.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock7.Text = "Energy source";
-                    }
-                    else {
-                        textBlock7.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock7.Text = "Energy source"; });
-                    }
-
-                    if (textBlock8.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock8.Text = "Relay (OFF)";
-                    }
-                    else {
-                        textBlock8.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock8.Text = "Relay (OFF)"; });
-                    }
-
-                    if (textBlock2.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock2.Text = "Change of source is: " + ChangeMode;
-                    }
-                    else {
-                        textBlock2.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock2.Text = "Change of source is: " + ChangeMode; });
-                    }
-
-                    if (textBlock1.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock1.Text = "Actual source: " + Source;
-                    }
-                    else {
-                        textBlock1.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock1.Text = "Actual source: " + Source; });
-                    }
-
-                    if (textBlock5.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock5.Text = "External charging time: " + cron.ToString();
-                    }
-                    else {
-                        textBlock5.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock5.Text = "External charging time: " + cron.ToString(); });
-                    }
-
-                    if (textBlock3.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock3.Text = "Voltage in of the system: " + vsys;
-                    }
-                    else {
-                        textBlock3.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock3.Text = "Voltage in of the system: " + vsys; });
-                    }
-
-                    if (textBlock4.Dispatcher.HasThreadAccess)
-                    {
-                        textBlock4.Text = "Voltage of the commercial current: " + vcom;
-                    }
-                    else {
-                        textBlock4.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { textBlock4.Text = "Voltage of the commercial current: " + vcom; });
-                    }
-                    
-
-
-                    if (vsys <= 12 && ChangeMode == "Auto")
-                    {
-                        arduino.digitalWrite(13, PinState.HIGH);
-                        Source = "Commercial current";
-                        cron.Start();
-                    }
-                    if (Source == "Commercial current" && cron.Elapsed >= diez)
-                    {
-                        arduino.digitalWrite(13, PinState.LOW);
-                        Source = "Panel";
-                        cron.Stop();
-                        cron.Reset();
-                    }
-                    flag1 = 1;
-                    second.Stop();
-                    second.Reset();
-                    flag2 = 0;
-                }
-            }
-        }
+        
 
         private void Auto_Click (object sender, RoutedEventArgs e)
         {
@@ -201,16 +176,22 @@ namespace UPS
 
         private void Panel_Click(object sender, RoutedEventArgs e)
         {
-            arduino.digitalWrite(13, PinState.LOW);
-            Source = "Panel";
-            cron.Stop();
-            cron.Reset();
+            if (ChangeMode.Equals("Manual"))
+            {
+                arduino.digitalWrite(13, PinState.LOW);
+                Source = "Panel";
+                cron.Stop();
+                cron.Reset();
+            }
         }
         private void Commercial_Click(object sender, RoutedEventArgs e)
         {
-            arduino.digitalWrite(13, PinState.HIGH);
-            Source = "Commercial current";
-            cron.Start();
+            if (ChangeMode.Equals("Manual"))
+            {
+                arduino.digitalWrite(13, PinState.HIGH);
+                Source = "Commercial current";
+                cron.Start();
+            }
         }
         private void relayON_Click(object sender, RoutedEventArgs e)
         {
